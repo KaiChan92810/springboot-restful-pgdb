@@ -1,8 +1,7 @@
 package com.example.demo.model;
 
-//import javax.validation.constraints.notnull;
-//import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,29 +24,28 @@ import lombok.NoArgsConstructor;
 @Table(name = "Users")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	@GeneratedValue(generator = "UUID", strategy = GenerationType.AUTO)
+	@Column(name = "id", updatable = false, nullable = false)
+	private UUID id;
 
 	@Column(name = "username")
 	private String username;
-	
+
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "phone")
 	private String phone;
-	
+
 	@Column(name = "password")
 	private String password;
-	
-    @Column(name="createAt")
-    @Temporal(TemporalType.TIMESTAMP)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Date createAt;
 
-    @Column(name="updateAt")
-    @Temporal(TemporalType.TIMESTAMP)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Date updateAt;
-			
+	@CreationTimestamp
+	@Column(name = "created_at", nullable = false, updatable = false)
+	private LocalDateTime createdAt;
+
+	@UpdateTimestamp
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
+
 }
