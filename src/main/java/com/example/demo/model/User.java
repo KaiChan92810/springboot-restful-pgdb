@@ -1,10 +1,25 @@
 package com.example.demo.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+//import javax.validation.constraints.notnull;
+//import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Users")
 public class User {
@@ -14,52 +29,24 @@ public class User {
 
 	@Column(name = "username")
 	private String username;
+	
 	@Column(name = "email")
 	private String email;
+	
 	@Column(name = "phone")
 	private String phone;
+	
+	@Column(name = "password")
+	private String password;
+	
+    @Column(name="createAt")
+    @Temporal(TemporalType.TIMESTAMP)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Date createAt;
 
-	public User() {
-
-	}
-
-	public User(String username, String phone, String email) {
-		this.username = username;
-		this.email = email;
-		this.phone = phone;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void createUser(String username, String phone, String email) {
-		this.username = username;
-		this.phone = phone;
-		this.email = email;
-	}
-	public void createUser(String username, String phone) {
-		this.username = username;
-		this.phone = phone;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + "]";
-	}
+    @Column(name="updateAt")
+    @Temporal(TemporalType.TIMESTAMP)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Date updateAt;
+			
 }
